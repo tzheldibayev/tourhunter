@@ -2,38 +2,24 @@
 
 namespace app\models;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
+/**
+ * Class User
+ *
+ * @package app\models
+ */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
-     * @var int
+     * @return array
      */
-    public $id;
-
-    /**
-     * @var string
-     */
-    public $username;
-
-    /**
-     * @var string
-     */
-    public $authKey;
-
-    /**
-     * @var string
-     */
-    public $accessToken;
-
-    /**
-     * @var double
-     */
-    public $balance;
-
     public function rules()
     {
         return [
+            [['username', 'access_token', 'auth_key'], 'safe'],
             [['username', 'access_token', 'auth_key'], 'required'],
             [['username'], 'string', 'max' => 100],
             [['username', 'access_token', 'auth_key'], 'unique'],
@@ -81,7 +67,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -89,7 +75,46 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->auth_key === $authKey;
+    }
+
+    public static function tableName()
+    {
+        return 'users';
+    }
+
+    /**
+     * Generates "remember me" authentication key
+     *
+     * @throws \yii\base\Exception
+     */
+    public function generateAuthKey()
+    {
+        $this->auth_key = \Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Generates access token
+     *
+     * @throws \yii\base\Exception
+     */
+    public function generateAccessToken()
+    {
+        $this->access_token = \Yii::$app->security->generateRandomString();
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
 }
