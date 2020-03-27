@@ -18,8 +18,7 @@ $repository = Dotenv\Repository\RepositoryBuilder::create()
     ])
     ->immutable()
     ->make();
-$dotenv = Dotenv\Dotenv::create($repository, __DIR__.'../');
-$dotenv->required('DB_DSN')->notEmpty();
+$dotenv = Dotenv\Dotenv::create($repository, realpath(__DIR__.'/..'));
 $dotenv->load();
 
 $config = require __DIR__ . '/../config/web.php';
