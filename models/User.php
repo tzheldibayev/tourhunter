@@ -8,8 +8,12 @@ use yii\db\Expression;
 
 /**
  * Class User
- *
  * @package app\models
+ *
+ * @property $id integer
+ * @property $username string
+ * @property $auth_key string
+ * @property $access_token string
  */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -100,7 +104,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function generateAccessToken()
     {
-        $this->access_token = \Yii::$app->security->generateRandomString();
+        $this->access_token = \Yii::$app->security->generateRandomString(32);
     }
 
     public function behaviors()

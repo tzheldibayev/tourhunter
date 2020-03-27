@@ -18,13 +18,9 @@ $repository = Dotenv\Repository\RepositoryBuilder::create()
     ])
     ->immutable()
     ->make();
-$dotenv = Dotenv\Dotenv::create($repository, realpath(__DIR__.'/..'));
+$dotenv = Dotenv\Dotenv::create($repository, realpath(__DIR__.'/../'));
 $dotenv->load();
 
 $config = require __DIR__ . '/../config/web.php';
 
 (new yii\web\Application($config))->run();
-
-
-// для предотвращения скачивания .env файла выносим его за пределы DOCUMENT_ROOT (/web/), т.е. в корень проекта
-// если есть возможность, так же добавить запрет на доступ к .env файлу в конфиге веб сервера
