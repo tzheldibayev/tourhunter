@@ -14,6 +14,7 @@ use yii\db\Expression;
  * @property $username string
  * @property $auth_key string
  * @property $access_token string
+ * @property $balance double
  */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -23,7 +24,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'access_token', 'auth_key'], 'safe'],
             [['username', 'access_token', 'auth_key'], 'required'],
             [['username'], 'string', 'max' => 100],
             [['username', 'access_token', 'auth_key'], 'unique'],

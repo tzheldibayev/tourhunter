@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
 use app\factories\UserFactory;
@@ -9,7 +10,7 @@ use app\factories\UserFactory;
 /**
  * LoginForm is the model behind the login form.
  *
- * @property User|null $user This property is read-only.
+ * @property User $user This property is read-only.
  *
  */
 class LoginForm extends Model
