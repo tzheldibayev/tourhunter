@@ -18,6 +18,7 @@ use yii\db\Expression;
  */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    const MIN_BALANCE = -1000.00;
     /**
      * @return array
      */
@@ -120,5 +121,4 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             ],
         ];
     }
-
 }

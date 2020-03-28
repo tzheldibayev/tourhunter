@@ -2,10 +2,7 @@
 
 namespace app\models\forms;
 
-use app\models\User;
-use Yii;
 use yii\base\Model;
-use app\factories\UserFactory;
 
 /**
  * Class MoneyTransferForm.
@@ -19,7 +16,6 @@ class MoneyTransferForm extends Model
 {
     public $username;
     public $amount;
-    public $verifyCode;
 
     /**
      * @return array the validation rules.
@@ -27,9 +23,8 @@ class MoneyTransferForm extends Model
     public function rules()
     {
         return [
-            [['username', 'amount', 'verifyCode'], 'required'],
+            [['username', 'amount'], 'required'],
             [['amount'], 'double'],
-            ['verifyCode', 'captcha', 'captchaAction'=>'site/captcha'],
         ];
     }
 }

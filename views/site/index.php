@@ -32,11 +32,15 @@ $this->title = 'TourHunter';
                     'format' => 'raw',
                     'visible' => Yii::$app->user->isGuest ? false : true,
                     'value' => function($model) {
-                        return \yii\helpers\Html::a('<span class="glyphicon glyphicon-plus-sign"></span>',
-                            \yii\helpers\Url::to(['user/transfer', 'userId' => $model->id]), [
-                                'title' => \Yii::t('yii', 'Add'),
-                                'data-pjax' => '1',
-                            ]);
+                        if (Yii::$app->user->id !== $model->id) {
+                            return \yii\helpers\Html::a('<span class="glyphicon glyphicon-plus-sign"></span>',
+                                \yii\helpers\Url::to(['user/transfer', 'userId' => $model->id]), [
+                                    'title' => \Yii::t('yii', 'Add'),
+                                    'data-pjax' => '1',
+                                ]);
+                        } else {
+                            return false;
+                        }
                     }
                 ],
             ],

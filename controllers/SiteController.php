@@ -10,6 +10,11 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 
+/**
+ * Class SiteController
+ *
+ * @package app\controllers
+ */
 class SiteController extends Controller
 {
     /**
@@ -47,10 +52,6 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
@@ -63,6 +64,9 @@ class SiteController extends Controller
     {
         $userSearch = new UserSearch();
         $dataProvider = $userSearch->search(Yii::$app->getRequest()->getQueryParams());
+        $dataProvider->setPagination([
+            'pageSize' => 10,
+        ]);
 
         return $this->render('index', compact('userSearch', 'dataProvider'));
     }
@@ -70,7 +74,8 @@ class SiteController extends Controller
     /**
      * Login action.
      *
-     * @return Response|string
+     * @return string|Response
+     * @throws \yii\base\Exception
      */
     public function actionLogin()
     {
