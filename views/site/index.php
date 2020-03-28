@@ -26,6 +26,16 @@ $this->title = 'TourHunter';
                     'attribute' => 'balance',
                     'format' => ['decimal', 2],
                 ],
+                [
+                    'format' => 'raw',
+                    'value' => function($model){
+                        return \yii\helpers\Html::a('<span class="glyphicon glyphicon-plus-sign"></span>',
+                            \yii\helpers\Url::to(['user/transfer', 'userId' => $model->id]), [
+                                'title' => \Yii::t('yii', 'Add'),
+                                'data-pjax' => '1',
+                            ]);
+                    }
+                ],
             ],
         ]); ?>
         <?php Pjax::end(); ?>
