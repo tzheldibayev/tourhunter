@@ -17,10 +17,18 @@ class m200327_131229_create_users_tables extends Migration
             'username' => $this->string()->unique()->notNull(),
             'access_token' => $this->string()->unique()->notNull(),
             'auth_key' => $this->string()->unique()->notNull(),
-            'balance' => $this->decimal()->notNull()->defaultValue(0.00),
+            'balance' => $this->decimal(10, 2)->notNull()->defaultValue(0.00),
             'created_at' => $this->dateTime()->notNull()->defaultExpression('NOW()'),
             'updated_at' => $this->dateTime()->notNull()->defaultExpression('NOW()'),
         ]);
+
+        for ($i = 1; $i <= 10; $i++) {
+            $this->insert('users', [
+                'username' => 'test '. $i,
+                'auth_key' => \Yii::$app->security->generateRandomString(),
+                'access_token' => \Yii::$app->security->generateRandomString(),
+            ]);
+        }
     }
 
     /**
