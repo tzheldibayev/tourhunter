@@ -20,10 +20,10 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only'  => ['logout'],
+                'only'  => ['transfer'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['transfer'],
                         'allow'   => true,
                         'roles'   => ['@'],
                     ],
@@ -32,21 +32,8 @@ class UserController extends Controller
             'verbs'  => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'transfer' => ['get', 'post'],
                 ],
-            ],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'captcha' => [
-                'class'           => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }

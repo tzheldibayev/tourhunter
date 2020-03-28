@@ -2,6 +2,8 @@
 
 use yii\widgets\Pjax;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
@@ -28,7 +30,8 @@ $this->title = 'TourHunter';
                 ],
                 [
                     'format' => 'raw',
-                    'value' => function($model){
+                    'visible' => Yii::$app->user->isGuest ? false : true,
+                    'value' => function($model) {
                         return \yii\helpers\Html::a('<span class="glyphicon glyphicon-plus-sign"></span>',
                             \yii\helpers\Url::to(['user/transfer', 'userId' => $model->id]), [
                                 'title' => \Yii::t('yii', 'Add'),
