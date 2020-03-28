@@ -11,6 +11,20 @@ defined('YII_ENV') or define('YII_ENV', 'test');
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
+// Load .env configuration
+$repository = Dotenv\Repository\RepositoryBuilder::create()
+    ->withReaders([
+        new Dotenv\Repository\Adapter\EnvConstAdapter(),
+    ])
+    ->withWriters([
+        new Dotenv\Repository\Adapter\EnvConstAdapter(),
+        new Dotenv\Repository\Adapter\PutenvAdapter(),
+    ])
+    ->immutable()
+    ->make();
+$dotenv = Dotenv\Dotenv::create($repository, realpath(__DIR__.'/../'));
+$dotenv->load();
+
 $config = require __DIR__ . '/../config/test.php';
 
 (new yii\web\Application($config))->run();
